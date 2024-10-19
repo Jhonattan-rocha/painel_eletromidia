@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { MainContainer, ProgressBar, ProgressBarContainer, VideoStyled, ContainerButtons, ContainerInfo, ScrollContainer, ScrollContent, ScrollItem, SoundControlContainer, VolumeIconButton, VolumeBar} from './styled';
+import { MainContainer, ProgressBar, ProgressBarContainer, VideoStyled, ContainerButtons, ContainerInfo, ScrollContainer, ScrollContent, ScrollItem, SoundControlContainer, VolumeIconButton, VolumeBar, TimeItem} from './styled';
 import { FaArrowDown, FaArrowUp, FaPause, FaPlay, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import { MdFullscreen, MdFullscreenExit } from 'react-icons/md';
 import { IoVolumeHigh, IoVolumeMute } from 'react-icons/io5';
@@ -69,7 +69,7 @@ function App() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL');
+      const response = await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,BTC-BRL,CAD-BRL,GBP-BRL,ARS-BRL,JPY-BRL,CNY-BRL');
       if (!response.ok) {
         throw new Error('Erro ao buscar os dados'); // Tratamento de erro
       }
@@ -137,16 +137,25 @@ function App() {
     const handleVideoLoadEnd = () => {
       setPlayPause(true);
     };
+    const handleFullscreenChange = () => {
+      if (document.fullscreenElement === video.current) {
+        setFullScreen(true);  // Entrou em fullscreen
+      } else {
+        setFullScreen(false); // Saiu do fullscreen
+      }
+    };
 
     video.current.addEventListener('loadeddata', handleVideoLoad);
     video.current.addEventListener('ended', handleVideoLoadEnd);
     video.current.addEventListener('timeupdate', handleTimeUpdate);
+    video.current.addEventListener('fullscreenchange', handleFullscreenChange)
 
     return () => {
       if(video.current){
         video.current.removeEventListener('timeupdate', handleTimeUpdate);
         video.current.removeEventListener('loadeddata', handleVideoLoad);
         video.current.removeEventListener('ended', handleVideoLoadEnd);
+        video.current.removeEventListener('fullscreenchange', handleFullscreenChange);
       }
     };
   }, []);
@@ -188,11 +197,11 @@ function App() {
             {coins?
               Object.values(coins).map(coin => {
                 return (
-                  <ScrollItem>Moeda: {coin['name']}, valor: {Number(coin['bid']).toFixed(2)} {Number(coin['pctChange']) > 0 ? <FaArrowUp size={25}></FaArrowUp>:<FaArrowDown size={25}></FaArrowDown>}</ScrollItem>
+                  <ScrollItem>Moeda: {coin['name']}, valor: {Number(coin['bid']).toFixed(2)} {Number(coin['pctChange']) > 0 ? <FaArrowUp size={40} color='#27ae60'></FaArrowUp>:<FaArrowDown size={40} color='#e74c3c'></FaArrowDown>}</ScrollItem>
                 );
               })
             : null}
-            <ScrollItem>{time.toLocaleTimeString()}</ScrollItem>
+            <TimeItem>{time.toLocaleTimeString()}</TimeItem>
           </ScrollContent>
         </ScrollContainer>
       </ContainerInfo>
