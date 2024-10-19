@@ -10,7 +10,7 @@ export const MainContainer = styled.div`
 
 export const VideoStyled = styled.video`
   width: 100%;
-  height: 95%;
+  height: 93%;
   margin: 0;
   padding: 0;
   object-fit: cover; /* Ajuste para cobrir sem distorções */
@@ -36,6 +36,65 @@ export const ProgressBar = styled.div`
   transition: width 0.4s ease-in-out; /* Animação suave */
 `;
 
+export const ProgressBarView = styled.input`
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  margin: 0 10px;
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #4caf50;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+
+  &::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #4caf50;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+
+  &::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #4caf50;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+
+  &::-webkit-slider-runnable-track {
+    height: 10px;
+    background: #4caf4f94;
+    border-radius: 5px;
+  }
+
+  &::-moz-range-track {
+    height: 10px;
+    background: #ddd;
+    border-radius: 5px;
+  }
+
+  &::-ms-track {
+    height: 10px;
+    background: #ddd;
+    border-radius: 5px;
+    border: none;
+    color: transparent;
+  }
+`;
+
 export const ContainerButtons = styled.div`
   width: 100%;
   z-index: 999;
@@ -53,76 +112,31 @@ export const ContainerButtons = styled.div`
 export const ContainerInfo = styled.div`
   width: 100%;
   height: 5%;
+  padding: 0 10px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   flex-direction: row;
   background-color: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente */
   p {
-    font-size: 1.5em;
     color: #2d3436; /* Texto em cinza escuro */
     font-weight: bold;
     padding-right: 10px;
   }
 `;
 
-export const scroll = keyframes`
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-`;
-
-export const ScrollContainer = styled.div`
-  width: 100%;
-  overflow: hidden;
-  background-color: #f8f9fa; /* Fundo claro e suave */
-  border-radius: 12px; /* Bordas mais arredondadas */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
-  padding: 20px; /* Mais espaçamento interno */
-  margin: 20px 0; /* Margem para espaçamento vertical */
-  transition: background-color 0.4s ease-in-out; /* Transição suave no hover */
-
-  &:hover {
-    background-color: #f0f4f8; /* Mudança de cor ao passar o mouse */
-  }
-`;
-
-export const ScrollContent = styled.div`
-  display: flex;
-  align-items: center; /* Centraliza verticalmente os itens */
-  animation: ${scroll} 25s linear infinite; /* Animação mais suave */
-  gap: 24px; /* Maior espaçamento entre os itens */
-`;
-
-export const ScrollItem = styled.div`
-  min-width: 450px; /* Largura mínima maior para melhor legibilidade */
-  margin: 0 20px;
-  padding: 24px; /* Mais espaço interno */
-  background-color: #ffffff; /* Fundo branco */
-  border-radius: 16px; /* Bordas arredondadas */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  transition: transform 0.3s ease, background-color 0.3s ease; /* Transição suave para o hover */
+export const CotainerCoins = styled.div`
+  width: fit-content;
+  height: 5%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 22px; /* Fonte ligeiramente menor */
-  font-weight: bold;
-  color: #2c3e50; /* Cor de texto mais escura para contraste */
-  text-align: center; /* Centraliza o texto */
-  
-  &:hover {
-    transform: scale(1.05); /* Suave aumento ao passar o mouse */
-    background-color: #f1f2f6; /* Cor de fundo mais clara no hover */
-  }
-
-  svg {
-    margin-left: 10px; /* Espaçamento entre o ícone e o texto */
-    transition: color 0.3s ease;
-  }
 `;
 
-export const TimeItem = styled(ScrollItem)`
-  font-size: 20px; /* Menor para o relógio */
-  color: #3498db; /* Azul suave */
+export const ItemTime = styled.div`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: grey;
 `;
 
 export const SoundControlContainer = styled.div`
@@ -179,3 +193,51 @@ export const VolumeIconButton = styled.button`
     color: ${({ muted }) => (muted ? '#c0392b' : '#16a085')};
   }
 `;
+
+export const WeatherContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #e0f7fa, #80deea);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 140px;
+  height: 100%;
+  color: #004d40;
+  margin-right: auto;
+`;
+
+export const IconWrapper = styled.div`
+  font-size: 50px;
+  color: ${({ $condition }) => {
+    switch ($condition) {
+      case 'Céu limpo':
+        return '#fbc02d'; // Cor do sol
+      case 'Chuva':
+        return '#039be5'; // Cor da chuva
+      case 'Nublado':
+        return '#90a4ae'; // Cor do céu nublado
+      default:
+        return '#757575'; // Cor padrão
+    }
+  }};
+`;
+
+export const WeatherInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const Temperature = styled.h2`
+  font-size: 36px;
+  margin: 5px 0;
+  color: #00796b;
+`;
+
+export const ConditionLabel = styled.p`
+  font-size: 18px;
+  font-weight: bold;
+  color: #004d40;
+`;
+
